@@ -1,0 +1,19 @@
+{
+  "name": "@starknet-agentic/erc8004-validation-demo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "demo": "npx tsx run.ts",
+    "test": "vitest run --silent"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "starknet": "^9.4.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
+  }
+}

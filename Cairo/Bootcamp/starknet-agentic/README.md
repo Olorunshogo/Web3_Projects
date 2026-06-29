@@ -1,0 +1,291 @@
+# Starknet Agentic
+
+```text
+┌──────────────────────────────────────────────────────────────┐
+│ starknet-agentic                                            │
+│ contracts • runtimes • skills for policy-enforced agents    │
+└──────────────────────────────────────────────────────────────┘
+```
+
+[![CI](https://github.com/keep-starknet-strange/starknet-agentic/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/keep-starknet-strange/starknet-agentic/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/keep-starknet-strange/starknet-agentic/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/keep-starknet-strange/starknet-agentic/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
+Infrastructure for the Starknet agent economy: contracts, runtimes, and skills to run self-custodial AI agents with on-chain identity, policy-enforced execution, and composable tool access.
+
+## Why This Exists
+
+Most agent stacks treat wallets as add-ons. `starknet-agentic` treats wallets, identity, and execution policy as first-class system boundaries.
+
+This repo gives you:
+
+- account-level control rails (session keys, spending policy, revoke paths)
+- ERC-8004 identity, reputation, and validation registries on Starknet
+- MCP and A2A integration packages for agent runtimes
+- reusable skills and end-to-end examples
+
+## Fastest Path
+
+If you just want Starknet agent capabilities now:
+
+```bash
+npx create-starknet-agent@latest
+```
+
+Sanity check (npm availability):
+
+```bash
+npm view create-starknet-agent version
+```
+
+The scaffolder detects your environment (OpenClaw/MoltBook, Claude Code, Cursor, or standalone) and wires Starknet integration automatically.
+
+## Install & Use
+
+Use the path that matches your runtime:
+
+```bash
+# Full project scaffold
+npx create-starknet-agent@latest
+```
+
+```bash
+# Codex (built-in installer, cairo-auditor)
+CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+python3 "$CODEX_HOME/skills/.system/skill-installer/scripts/install-skill-from-github.py" \
+  --repo keep-starknet-strange/starknet-agentic \
+  --path skills/cairo-auditor \
+  --ref main
+# Restart Codex, then run /skills and invoke cairo-auditor
+```
+
+```bash
+# Codex (frozen install)
+# Replace <commit-sha> with the exact immutable revision you want to pin.
+CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+python3 "$CODEX_HOME/skills/.system/skill-installer/scripts/install-skill-from-github.py" \
+  --repo keep-starknet-strange/starknet-agentic \
+  --path skills/cairo-auditor \
+  --ref <commit-sha>
+```
+
+```bash
+# Claude Code marketplace
+/plugin marketplace add keep-starknet-strange/starknet-agentic
+/plugin install starknet-agentic-skills@starknet-agentic-skills --scope user
+/reload-plugins
+/plugin menu
+/starknet-agentic-skills:cairo-auditor
+```
+
+```bash
+# Individual skill install via Agent Skills CLI
+npx skills add keep-starknet-strange/starknet-agentic/skills/cairo-auditor
+```
+
+For deterministic install/usage guidance, see:
+
+- [skills/QUICKSTART_2MIN.md](./skills/QUICKSTART_2MIN.md)
+- [skills/TROUBLESHOOTING.md](./skills/TROUBLESHOOTING.md)
+- [docs/CLAUDE_MARKETPLACE_SUBMISSION.md](./docs/CLAUDE_MARKETPLACE_SUBMISSION.md)
+
+For the full skill catalog and Cairo migration notes, see [skills/README.md](./skills/README.md) and [docs/CAIRO_SKILLS_MIGRATION.md](./docs/CAIRO_SKILLS_MIGRATION.md).
+
+## Flagship Skills
+
+| Skill | Best for | Fast path |
+|---|---|---|
+| [`cairo-auditor`](./skills/cairo-auditor/) | Pre-merge Cairo security review with deterministic preflight and false-positive gating | [30-second quickstart](./skills/QUICKSTART_2MIN.md) |
+| [`starknet-wallet`](./skills/starknet-wallet/) | Wallet ops, transfers, session keys, paymaster flows | [Skill docs](./skills/starknet-wallet/) |
+| [`starknet-defi`](./skills/starknet-defi/) | Swaps, DCA, staking, lending, AVNU routing | [Skill docs](./skills/starknet-defi/) |
+| [`starknet-identity`](./skills/starknet-identity/) | ERC-8004 registration, reputation, validation | [Skill docs](./skills/starknet-identity/) |
+
+## System Requirements
+
+- CLI users (`npx create-starknet-agent@latest`): Node.js `>=18.0.0`
+- Contributors from source (this monorepo):
+  - Node.js `>=20.9.0`
+  - `pnpm` `>=10.28.2` (workspace package manager)
+  - Scarb `>=2.14.0` + Starknet Foundry (`snforge`) `>=0.54.1` (for Cairo builds/tests)
+
+## Choose Your Path
+
+| Goal | Start here |
+|---|---|
+| Add Starknet tools to an existing agent | [`packages/create-starknet-agent`](./packages/create-starknet-agent/) |
+| Run local no-backend onboarding demo | [`examples/onboard-agent`](./examples/onboard-agent/) |
+| Run autonomous loop with MCP tools | [`examples/full-stack-swarm`](./examples/full-stack-swarm/) |
+| Integrate on-chain identity/reputation | [`contracts/erc8004-cairo`](./contracts/erc8004-cairo/) |
+| Build production signer boundary | [`packages/starknet-mcp-server`](./packages/starknet-mcp-server/) + external signer (proxy mode) |
+
+## Architecture
+
+```mermaid
+flowchart TB
+  A["Agent Runtime<br/>(OpenClaw, Claude Code, custom app)"] --> B["MCP / A2A Layer<br/>starknet-mcp-server, starknet-a2a, skills"]
+  B --> C["Signer Boundary<br/>direct (dev) or proxy (prod)"]
+  C --> D["Starknet Contracts"]
+  D --> D1["Agent-account stack<br/>owner controls + spending policy enforcement"]
+  D --> D2["ERC-8004 Registries<br/>Identity, Reputation, Validation"]
+  D --> D3["Session-account primitives<br/>session-key account modules"]
+```
+
+## No-Backend Trust Model (Recommended Launch Profile)
+
+Default launch profile is self-custodial and no-backend:
+
+- users run agent runtime locally or on their own infra
+- transaction policy is enforced on-chain by account contracts
+- no central signer or shared custody by this project
+
+For production environments, use MCP proxy signer mode rather than raw in-process private keys.
+
+## Core Components
+
+### Contracts
+
+| Component | Path | What it does |
+|---|---|---|
+| Agent account contracts | [`contracts/agent-account`](./contracts/agent-account/) | Session keys, policy enforcement, ownership controls |
+| ERC-8004 Cairo registries | [`contracts/erc8004-cairo`](./contracts/erc8004-cairo/) | Identity, reputation, validation primitives |
+| Session-account primitives | [`contracts/session-account`](./contracts/session-account/) | Session-key account modules for policy-centric execution |
+| Huginn registry | [`contracts/huginn-registry`](./contracts/huginn-registry/) | Additional registry primitives used by ecosystem demos |
+
+### Packages
+
+| Package | Path | Purpose |
+|---|---|---|
+| `create-starknet-agent` | [`packages/create-starknet-agent`](./packages/create-starknet-agent/) | Scaffolds/installs Starknet agent integration |
+| `@starknet-agentic/mcp-server` | [`packages/starknet-mcp-server`](./packages/starknet-mcp-server/) | Starknet operations over MCP |
+| `@starknet-agentic/a2a` | [`packages/starknet-a2a`](./packages/starknet-a2a/) | A2A protocol adapter |
+| `@starknet-agentic/agent-passport` | [`packages/starknet-agent-passport`](./packages/starknet-agent-passport/) | ERC-8004 capability metadata helpers |
+| `@starknet-agentic/prediction-arb-scanner` | [`packages/prediction-arb-scanner`](./packages/prediction-arb-scanner/) | Signals-only prediction market arb scanner output model |
+| `@starknet-agentic/onboarding-utils` | [`packages/starknet-onboarding-utils`](./packages/starknet-onboarding-utils/) | Shared onboarding helpers |
+
+### Skills
+
+Skill packs live in [`skills/`](./skills/). Browse full catalog and install flows in [`skills/README.md`](./skills/README.md).
+Cairo migration notes and legacy mapping live in [`docs/CAIRO_SKILLS_MIGRATION.md`](./docs/CAIRO_SKILLS_MIGRATION.md).
+
+Install one skill:
+
+```bash
+npx skills add keep-starknet-strange/starknet-agentic/skills/starknet-wallet
+```
+
+## Standards and Interop
+
+| Standard | Purpose | Implementation |
+|---|---|---|
+| [MCP](https://modelcontextprotocol.io/) | Agent tool interface | `packages/starknet-mcp-server` |
+| [A2A](https://a2a-protocol.org/) | Agent-to-agent messaging/workflows | `packages/starknet-a2a` |
+| [ERC-8004](https://eips.ethereum.org/EIPS/eip-8004) | Agent identity/reputation/validation | `contracts/erc8004-cairo` |
+
+Parity and Starknet-specific behavior for ERC-8004 is documented in [`docs/ERC8004-PARITY.md`](./docs/ERC8004-PARITY.md).
+
+## Quickstart From Source (Contributors)
+
+### 1) Install
+
+```bash
+pnpm install
+```
+
+### 2) Build and test JS/TS workspace (packages, examples, website)
+
+```bash
+# full workspace
+pnpm build
+pnpm test
+
+# packages only (faster path when you do not need example/website checks)
+pnpm -r --filter "./packages/*" build
+pnpm -r --filter "./packages/*" test
+```
+
+### 3) Run Cairo checks
+
+```bash
+failed=0
+for dir in contracts/erc8004-cairo contracts/huginn-registry contracts/agent-account contracts/session-account; do
+  if ! (cd "$dir" && scarb build && snforge test); then
+    echo "Cairo checks failed in $dir"
+    failed=1
+    break
+  fi
+done
+[ "$failed" -eq 0 ]
+```
+
+### 4) Run a minimal E2E demo
+
+Before running, configure the required environment in:
+[`examples/hello-agent/README.md`](./examples/hello-agent/README.md)
+
+```bash
+# from repo root (after configuring examples/hello-agent/.env)
+pnpm demo:hello-agent
+```
+
+## Example Gallery
+
+| Example | What it proves |
+|---|---|
+| [`examples/hello-agent`](./examples/hello-agent/) | Minimal RPC + state read + transaction path |
+| [`examples/onboard-agent`](./examples/onboard-agent/) | Deploy agent account + register identity + receipt artifacts |
+| [`examples/defi-agent`](./examples/defi-agent/) | Autonomous DeFi strategy agent (triangular arb + risk controls) |
+| [`examples/carry-agent`](./examples/carry-agent/) | Deterministic carry monitor (Extended funding + net-edge decision artifact) |
+| [`examples/full-stack-swarm`](./examples/full-stack-swarm/) | Autonomous multi-agent run with MCP + signer boundary + ERC-8004 |
+| [`examples/secure-defi-demo`](./examples/secure-defi-demo/) | Base reputation envelope + Starknet guardrails + Vesu flow artifact |
+| [`examples/crosschain-demo`](./examples/crosschain-demo/) | Cross-chain registration flow (Base Sepolia + Starknet Sepolia) |
+| [`examples/erc8004-validation-demo`](./examples/erc8004-validation-demo/) | Validation request/response + summary extraction |
+| [`examples/starkzap-onboard-transfer`](./examples/starkzap-onboard-transfer/) | End-to-end Starkzap onboarding and STRK transfer flow (Sepolia) |
+| [`examples/controller-calls`](./examples/controller-calls/) | Non-custodial unsigned-call flow with external signer execution |
+
+## Security and Release Integrity
+
+- read security policy: [`SECURITY.md`](./SECURITY.md)
+- hardened signer setup: use proxy signer mode in [`packages/starknet-mcp-server`](./packages/starknet-mcp-server/)
+- GitHub Actions quality gates: [`ci.yml`](./.github/workflows/ci.yml), [`codeql.yml`](./.github/workflows/codeql.yml), [`dependency-review.yml`](./.github/workflows/dependency-review.yml)
+- publish pipeline uses provenance + attestations: [`publish.yml`](./.github/workflows/publish.yml)
+
+Release artifact verification (recommended):
+
+```bash
+gh attestation verify <artifact-file> --repo keep-starknet-strange/starknet-agentic
+```
+
+## Community and Help
+
+- [GitHub Issues](https://github.com/keep-starknet-strange/starknet-agentic/issues) for bugs and docs fixes
+- [Starknet Discord](https://discord.gg/starknet) for ecosystem support
+- [Starknet on X](https://x.com/Starknet) for release updates
+
+## Repository Layout
+
+```text
+starknet-agentic/
+├── .agents/          # Codex discovery entrypoints (symlinks to skills/*)
+├── contracts/        # Cairo contracts (account, ERC-8004, session-account)
+├── packages/         # MCP/A2A/CLI and supporting libraries
+├── skills/           # Agent skill packs
+├── examples/         # End-to-end demos and reference flows
+├── docs/             # Specs, roadmap, troubleshooting, launch material
+└── website/          # Documentation website
+```
+
+## Documentation
+
+- getting started: [`docs/GETTING_STARTED.md`](./docs/GETTING_STARTED.md)
+- roadmap: [`docs/ROADMAP.md`](./docs/ROADMAP.md)
+- specification: [`docs/SPECIFICATION.md`](./docs/SPECIFICATION.md)
+- troubleshooting: [`docs/TROUBLESHOOTING.md`](./docs/TROUBLESHOOTING.md)
+- good first tasks: [`docs/GOOD_FIRST_ISSUES.md`](./docs/GOOD_FIRST_ISSUES.md)
+
+## Contributing
+
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+
+## License
+
+MIT ([`LICENSE`](./LICENSE))
