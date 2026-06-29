@@ -1,0 +1,6 @@
+[submodule "starknet-agentic"]
+	path = starknet-agentic
+	url = https://github.com/keep-starknet-strange/starknet-agentic.git
+[submodule "cairo-starknet-agentic"]
+	path = Cairo/2_Cairo/starknet-agentic
+	url = https://github.com/keep-starknet-strange/starknet-agentic.git

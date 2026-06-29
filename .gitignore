@@ -1,0 +1,68 @@
+# === Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# === Package manager locks
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# === Build outputs
+dist/
+build/
+out/
+
+# === Next.js
+.next/
+next-env.d.ts
+
+# === Hardhat
+artifacts/
+cache/
+typechain-types/
+
+# === Foundry
+cache/
+out/
+lib/
+
+# === Cairo / Scarb / Starknet Foundry
+target/
+.snfoundry_cache/
+
+# === Yarn
+.yarn/cache/
+.yarn/install-state.gz
+
+# === Test coverage
+coverage/
+coverage.json
+lcov.info
+
+# === Turbo
+.turbo/
+
+# === Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# === OS
+.DS_Store
+Thumbs.db
+
+# === Editor
+.vscode/settings.json
+*.swp
+*.swo
+
+# === Misc
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+.vercel

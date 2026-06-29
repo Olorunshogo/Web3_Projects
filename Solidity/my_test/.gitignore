@@ -1,0 +1,14 @@
+# Foundry
+cache/
+out/
+lib/
+
+# Coverage
+lcov.info
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store

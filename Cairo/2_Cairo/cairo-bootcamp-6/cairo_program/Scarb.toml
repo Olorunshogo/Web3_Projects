@@ -1,0 +1,20 @@
+[package]
+name = "cairo_6"
+version = "0.1.0"
+edition = "2025_12"
+
+[lib]
+
+[dependencies]
+
+[dev-dependencies]
+snforge_std = "0.59.0"
+assert_macros = "2.18.0"
+
+[scripts]
+test = "snforge test"
+
+[tool.scarb]
+allow-prebuilt-plugins = ["snforge_std"]
+
+
