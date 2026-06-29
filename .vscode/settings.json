@@ -1,0 +1,37 @@
+{
+  // === Snyk
+  "snyk.advanced.autoSelectOrganization": true,
+
+  // === Cairo / Scarb
+  "cairo1.scarbPath": "scarb",
+  "cairo1.enableLanguageServer": true,
+  "cairo1.enableScarb": true,
+
+  // === Editor
+  "editor.formatOnSave": true,
+  "editor.trimAutoWhitespace": true,
+  "editor.rulers": [80],
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.renderWhitespace": "boundary",
+
+  // === Files
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.cairo": "cairo",
+    "Scarb.toml": "toml",
+    "snfoundry.toml": "toml"
+  },
+  "files.exclude": {
+    "**/target": true,
+    "**/.snfoundry_cache": true
+  },
+
+  // === Search
+  "search.exclude": {
+    "**/target": true,
+    "**/.snfoundry_cache": true,
+    "**/Scarb.lock": true
+  }
+}

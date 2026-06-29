@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "starkware.cairo1",
+    "tamasfe.even-better-toml",
+    "esbenp.prettier-vscode",
+    "ms-vscode.makefile-tools",
+    "ms-azuretools.vscode-docker"
+  ]
+}

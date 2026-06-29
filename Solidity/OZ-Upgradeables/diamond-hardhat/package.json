@@ -1,0 +1,17 @@
+{
+  "name": "diamond-hardhat",
+  "version": "1.0.0",
+  "description": "NFT Marketplace Diamond (EIP-2535)",
+  "type": "module",
+  "scripts": {
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.cjs"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "chai": "^4.3.10",
+    "hardhat": "^2.22.0"
+  }
+}

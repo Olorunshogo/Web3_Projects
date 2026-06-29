@@ -1,0 +1,21 @@
+{
+  "editor.formatOnSave": true,
+  "editor.rulers": [100],
+  "files.trimTrailingWhitespace": true,
+
+  "[cairo]": {
+    "editor.defaultFormatter": "starkware.cairo1"
+  },
+
+  "cairo1.languageServer.enable": true,
+
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+
+  "files.associations": {
+    "*.cairo": "cairo"
+  },
+
+  "terminal.integrated.defaultProfile.linux": "bash"
+}

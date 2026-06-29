@@ -1,0 +1,13 @@
+[package]
+name = "cairo_runner"
+version = "0.1.0"
+edition = "2025_12"
+
+[executable]
+
+[cairo]
+enable-gas = false
+
+[dependencies]
+cairo_execute = "2.18.0"
+cairo_6 = { path = "../cairo_program" }

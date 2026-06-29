@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "name": "Enforce Comment Style",
+  "description": "Checks edited source files for decorative ASCII separator comments (// ─── or // ---) and replaces them with the approved // === style",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "*.cairo",
+      "*.ts",
+      "*.tsx",
+      "*.js",
+      "*.mjs"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Check the edited file for any decorative ASCII separator comments matching patterns like `// ─── Name ───` or `// --- Name ---`. If found, replace them with `// === Name` style. Leave all other comments untouched."
+  }
+}

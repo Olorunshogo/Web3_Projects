@@ -1,0 +1,35 @@
+{
+  "name": "token",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "keystore:rpc": "pnpm hardhat keystore set SEPOLIA_RPC_URL --force",
+    "keystore:private": "pnpm hardhat keystore set SEPOLIA_PRIVATE_KEY --force",
+    "keystore:etherscan": "pnpm hardhat keystore set ETHERSCAN_API_KEY --force",
+    "erc20-deploy:sepolia": "hardhat --show-stack-traces ignition deploy ignition/modules/ERC20.ts --network sepolia",
+    "erc20-deploy:local": "hardhat ignition deploy ignition/modules/ERC20.ts",
+    "erc20-verify": "pnpm hardhat verify --network sepolia 0x2e68bB0A4583c89a4c304Ab99debCd01EE51Ff12 'LONER' 'BOM' 6 2000000000",
+    "erc721-deploy:sepolia": "hardhat ignition deploy ignition/modules/ERC721.ts --network sepolia",
+    "erc721-deploy:local": "hardhat ignition deploy ignition/modules/ERC721.ts",
+    "erc721-verify": "pnpm hardhat verify --network sepolia 0x2e68bB0A4583c89a4c304Ab99debCd01EE51Ff12 'BOMTOKEN' 'BMT' '/' "
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^4.0.4",
+    "@nomicfoundation/hardhat-ignition": "^3.0.7",
+    "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.2",
+    "@nomicfoundation/hardhat-verify": "^3.0.10",
+    "@types/chai": "^4.3.20",
+    "@types/chai-as-promised": "^8.0.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.19.11",
+    "chai": "^5.3.3",
+    "ethers": "^6.16.0",
+    "forge-std": "github:foundry-rs/forge-std#v1.9.4",
+    "hardhat": "^3.1.8",
+    "mocha": "^11.7.5",
+    "typescript": "~5.8.3"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.4.0"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  // Auto Save
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 300,
+
+  // Default formatter
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Format on save (acts like auto-lint with Prettier)
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+
+  // Tab & indentation
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+
+  // Solidity specific formatting
+  "[solidity]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 4
+  },
+
+  // Prettier config
+  "prettier.printWidth": 80,
+  "prettier.tabWidth": 4,
+  "prettier.useTabs": false,
+  "prettier.singleQuote": false,
+  "prettier.semi": true,
+  "prettier.trailingComma": "es5",
+  "prettier.bracketSpacing": true,
+
+  // Ensure Prettier runs even without config file
+  "prettier.requireConfig": false,
+
+  // Optional: trim whitespace
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // Solidity extension (if using Juan Blanco)
+  "solidity.formatter": "prettier",
+
+  // Optional: word wrap for readability
+  "editor.wordWrap": "on"
+}

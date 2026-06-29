@@ -1,0 +1,9 @@
+[submodule "Upgradeables/todo/lib/forge-std"]
+	path = Upgradeables/todo/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Upgradeables/todo/lib/openzeppelin-foundry-upgrades"]
+	path = Upgradeables/todo/lib/openzeppelin-foundry-upgrades
+	url = https://github.com/OpenZeppelin/openzeppelin-foundry-upgrades
+[submodule "Upgradeables/todo/lib/openzeppelin-contracts-upgradeable"]
+	path = Upgradeables/todo/lib/openzeppelin-contracts-upgradeable
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable

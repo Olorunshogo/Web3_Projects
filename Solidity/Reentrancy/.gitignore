@@ -1,0 +1,28 @@
+.env
+.vscode/
+
+package-lock.json
+node_modules
+script
+
+# Rust build artifacts
+/target
+**/target
+artifacts/
+cache/
+typechain-types/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+
+lib/

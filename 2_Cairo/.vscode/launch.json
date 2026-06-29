@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Cairo Program",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/target/dev/your_project.sierra.json",
+      "console": "integratedTerminal"
+    }
+  ]
+}
